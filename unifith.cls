@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% unifith.cls                                                     %%
-%% version 0.5                                                     %%
-%% 2019-04-07                                                      %%
+%% version 1.0                                                     %%
+%% 2019-08-07                                                      %%
 %% author: Francesco Biccari                                       %%
 %% contact: biccari@gmail.com                                      %%
 %%                                                                 %%
@@ -20,9 +20,9 @@
 
 \NeedsTeXFormat{LaTeX2e}[2009/01/01]
 \ProvidesClass{unifith}%
-[2019/04/07 University of Florence thesis class]
+[2019/08/07 University of Florence thesis class]
 
-\def\UFI@classVersion{0.5}
+\def\UFI@classVersion{1.0}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Options %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -524,7 +524,7 @@
   \newcommand{\UFI@AcknowledgmentsLabel}{Acknowledgments}
   \newcommand{\UFI@AbstractLabel}{Abstract}
   \newcommand{\UFI@allRightsReservedLabel}{All rights reserved}
-  \newcommand{\UFI@unifithInformationLabel}{This thesis has been typeset by \LaTeX\ and the Sapthesis class}
+  \newcommand{\UFI@unifithInformationLabel}{This thesis has been typeset by \LaTeX\ and the UniFiTh class}
   \newcommand{\UFI@emailLabel}{Author's email}}
 
 \newcommand{\UFI@italian}{%

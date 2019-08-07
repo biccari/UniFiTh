@@ -7,7 +7,7 @@
 
 \usepackage[scale=0.85, footskip=0.8cm,heightrounded]{geometry}
 \usepackage[T1]{fontenc}
-\usepackage[scaled=1]{newtxtext}
+\usepackage[helvratio=0.88]{newtxtext}
 \usepackage{textcomp}
 \usepackage{amsmath}
 \usepackage[varg,cmintegrals,cmbraces]{newtxmath}
@@ -53,7 +53,7 @@
 \author{\small Francesco Biccari\thanks{\href{mailto:biccari@gmail.com}{biccari@gmail.com}}}
 \title{\small Documentation of the \LaTeX\ class\\
 		\Large \textbf{\texttt{unifith.cls}}\\
-		\small \vspace{0.2cm} Version 0.5, 2019-04-07
+		\small \vspace{0.2cm} Version 1.0, 2019-08-07
 }
 \date{}
 
@@ -104,7 +104,7 @@
 \maketitle
 
 \begin{abstract}\noindent
-This document describes how to use \texttt{unifith.cls}, a \LaTeX\ document class for the typesetting of the theses of the ``University of Florence''. The official web page of \textsf{unifith} is {\footnotesize\url{http://biccari.altervista.org/c/informatica/latex/unifith.php}}.
+This document describes how to use \texttt{unifith.cls}, a \LaTeX\ document class for the typesetting of the theses of the ``University of Florence''. The official web page of \textsf{UniFiTh} is {\footnotesize\url{http://biccari.altervista.org/c/informatica/latex/unifith.php}}.
 \end{abstract}
 
 \setcounter{tocdepth}{2}
@@ -123,14 +123,14 @@ After several years in my faculty I noticed that usually students spend a lot of
 This is against the philosophy of \LaTeX, which was created to relieve the writer from the typesetter's work.
 Apart from the time spent, the resulting documents are obviously all different from each other and good aesthetic results are not always achieved.
 This has a negative impact both on the student's work and on the university.
-The present work has been developed starting from sapthesis class of the same author. It is worth to mention that the University of Florence has a dedicated page for its Communication Plan: {\footnotesize\url{https://www.unifi.it/ls-36-unifi-comunica.html}}, where you can find the guidelines for the preparation of the documents, the files of the logo and some examples. 
-
 For these reasons I thought that a \LaTeX\ class for the theses of my 
 university would have been a good idea.
 \textsf{UniFiTh} is the result of my work.
-To give a look to a document composed by \textsf{unifith} class, compile one of the several examples in the \texttt{examples} directory.
+It has been developed starting from \textsf{Sapthesis} class of the same author. \textsf{UniFiTh} follows the rules of the Communication Plan of the University of Florence: {\footnotesize\url{https://www.unifi.it/ls-36-unifi-comunica.html}}. At that link you can find the guidelines for the preparation of the documents, the files of the logo and some examples. 
+
+To give a look to a document composed by \textsf{UniFiTh} class, compile one of the several examples in the \texttt{examples} directory.
 In those files the page layout and the layout choices are explained.
-\textsf{Unifith} is released under the terms of the latest version of the 
+\textsf{UniFiTh} is released under the terms of the latest version of the 
 \href{http://www.latex-project.org/lppl/}{\LaTeX\ Project Public License}.
 
 I would like to thank the Italian \TeX\ user group (\href{http://www.guitex.org/}{GuIT}) for the help provided. I would like to thank also Giacomo Mazzamuto and Lorenzo Pattelli and all the users who reported bugs and suggestions.
@@ -138,11 +138,11 @@ I would like to thank the Italian \TeX\ user group (\href{http://www.guitex.org/
 \section[Requirements\\ and installation]{Requirements and installation}
 \label{requirements_installation}
 
-The simplest way to install \textsf{unifith} is by the package manager of 
-your \TeX\ distribution (\TeX\ Live or MiK\TeX). (NOT YET WORKING) For manual installation see 
+The simplest way to install \textsf{UniFiTh} is by the package manager of 
+your \TeX\ distribution (\TeX\ Live or MiK\TeX). For manual installation see 
 the \texttt{README} file. 
 
-The \textsf{sapthesis} package provides: the 
+The \textsf{UniFiTh} package provides: the 
 \texttt{unifith.cls} class file; the documentation 
 \texttt{unifith-doc.pdf} (this file) and its source code; the logo of the 
 University of Florence; several usage examples.
@@ -157,7 +157,7 @@ Do \textbf{not} include these packages in the preamble of your document!
 
 \section{Usage}
 
-A \LaTeX\ document based on \textsf{unifith} can be compiled only by the commands
+A \LaTeX\ document based on \textsf{UniFiTh} can be compiled only by the commands
 \texttt{pdflatex} and \texttt{xelatex}. In this manual only \texttt{pdflatex} will be considered.
 
 
@@ -185,7 +185,7 @@ The following options can be passed to the \texttt{\bs documentclass} command.
 \item[\texttt{binding=\textsl{length}}] (zero default binding)
 The value of this option is an offset of the text column.
 It is useful to take into account the margin for the binding (ask to your bookbinder for information).
-\item[\texttt{noexaminfo}] Suppress all the final exam informations. Indeed, by default, \textsf{sapthesis} shows some information about the final thesis discussion on the back of the title page. By default it shows the phrase ``Thesis not yet defended''. Otherwise, as explained later, giving the commands 
+\item[\texttt{noexaminfo}] Suppress all the final exam informations. Indeed, by default, \textsf{UniFiTh} shows some information about the final thesis discussion on the back of the title page. By default it shows the phrase ``Thesis not yet defended''. Otherwise, as explained later, giving the commands 
 \texttt{\bs examdate\{\dots\}} and \texttt{\bs examiner\{\dots\}} the date and
 the examiners list are shown.
 \item[\texttt{nodefaultfont}] Avoid the loading of packages \textsf{fontenc}, \textsf{textcomp} and \textsf{lmodern}.
@@ -272,7 +272,7 @@ If you use a language for the acknowledgments different from that of the thesis,
 
 \end{description}
 
-The \texttt{unifith} class defines also the color \texttt{unifiblue} which is the \emph{UniFi blue}: RGB(0,82,147).
+The \textsf{UniFiTh} class defines also the color \texttt{unifiblue} which is the \emph{UniFi blue}: RGB(0,82,147).
 Example of usage: \texttt{\bs textcolor\{unifiblue\}\{blah blah\}}
 
 
@@ -282,7 +282,7 @@ Example of usage: \texttt{\bs textcolor\{unifiblue\}\{blah blah\}}
 
 \item Do \textbf{not} change the default layout. If you want to change the interline spacing, do not use the \texttt{\bs linespread} command. Load instead the \textsf{setspace} package and use, for example, the \texttt{\bs onehalfspacing} command.
 
-\item Do \textbf{not} load the packages already loaded by \textsf{sapthesis} (see Sec.~\ref{requirements_installation}).
+\item Do \textbf{not} load the packages already loaded by \textsf{UniFiTh} (see Sec.~\ref{requirements_installation}).
 
 \item As you already should know, \LaTeX\ can process only documents
 in pure ASCII. If you want to insert \emph{directly} other characters, not included in the 128 ASCII characters (for example accented letters), you have to use a particular text encoding for your source file. Then you have to ``tell'' to \LaTeX\ which encoding you have chosen by the packages \texttt{inputenc}. It is always recommended to use UTF-8 character encoding and specify this choice also by the \emph{magic lines} at the beginning of the source code (see the examples in App.~\ref{sec:PhDexample} and~\ref{sec:LaMexample}).
@@ -308,7 +308,7 @@ is not very professional. The dedication should be enough.
 \item Usually tables and figures are centered. Remember that, according to the typographic rules, the table captions should be placed \textbf{above} the table, whereas the figure caption should be placed \textbf{below} the figure.
 
 \item If the figure has a small width, it is possible to put the figure caption
-aside the figure using the \texttt{sidecap} package (not preloaded by \textsf{sapthesis}).
+aside the figure using the \texttt{sidecap} package (not preloaded by \textsf{UniFiTh}).
 
 \item Avoid the use of colors unless really necessary. Remember that the figures should be readable even if they are printed in gray scale!
 
@@ -360,7 +360,7 @@ Finally we discuss the editor, that is the program used to write your source fil
 
 \end{itemize}
 
-Finally we explain how to compile the example documents provided in the \textsf{unifith} package. Double click on one of the \texttt{.tex} file in the \texttt{examples} folder. 
+Finally we explain how to compile the example documents provided in the \textsf{UniFiTh} package. Double click on one of the \texttt{.tex} file in the \texttt{examples} folder. 
 TeXworks should start showing the content of that file. 
 The \texttt{pdflatex} compiler should be automatically selected thanks to the \emph{magic lines} placed at the beginning of the file.
 Now, in order to compile, press the green button. 
