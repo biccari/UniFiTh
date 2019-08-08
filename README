@@ -2,7 +2,7 @@
 *                         UniFiTh class                             *
 *********************************************************************
 
-      This is the README file of the "unifith" LaTeX class.
+      This is the README file of the UniFiTh LaTeX class.
       Official web page:
       http://biccari.altervista.org/c/informatica/latex/unifith.php
 
@@ -15,10 +15,10 @@
       This work (specified below) may be distributed and/or
       modified under the conditions of the
       LaTeX Project Public License,
-      either version 1.3 of this license or any later version.
+      either version 1.3c of this license or any later version.
       The latest version of this license is in
         http://www.latex-project.org/lppl.txt
-      and version 1.3 or later is part of all distributions of
+      and version 1.3c or later is part of all distributions of
       LaTeX version 2005/12/01 or later.
 
       This work has the LPPL maintenance status 'maintained'.
@@ -48,3 +48,40 @@
       The version number of this class is reported at the top of the
       class file unifith.cls and in the pdf manual
       unifith-doc.pdf.
+
+
+
+** Installation instructions ****************************************
+
+      UniFiTh can be installed in 3 different ways:
+	  
+	  1. The simplest way to install UniFiTh is by the package manager
+      of your TeX distribution (TeX Live, MiKTeX or MacTeX).
+      
+      2. Instead, if you want to install UniFiTh manually, you have to
+      download the unifith.zip archive from CTAN or, better, from
+      the official UniFiTh website
+      http://biccari.altervista.org/c/informatica/latex/unifith.php
+      The unifith.zip archive contains: 
+        1. unifith.cls (main file)
+        2. unifith-doc.pdf (manual of unifith.cls)
+        3. unifith-doc.tex (source of the manual)
+        4. README (this file)
+        5. unifilogo.pdf (university logo)
+		6. examples folder with several examples of usage
+        7. unifith.bst (an english BibTeX style)
+	  You can simply copy unifith.cls and unifith.bst
+      together with unifilogo.pdf into your local work 
+	  directory where your thesis files will live.
+	  
+      3. The last possibility is copying the files of UniFiTh
+	  (discussed in the previous point) into your texmf tree
+      (or your localtexmf tree) at these locations:
+	    <texmf>/tex/latex/unifith/unifith.cls
+	    <texmf>/tex/latex/unifith/unifilogo.pdf
+	    <texmf>/doc/latex/unifith/unifith-doc.pdf
+	    <texmf>/doc/latex/unifith/unifith-doc.tex
+	    <texmf>/doc/latex/unifith/examples/*.tex
+	    <texmf>/doc/latex/unifith/README
+	    <texmf>/bibtex/bst/unifith/unifith.bst
+      Then, you need to update the file database.
