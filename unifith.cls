@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% unifith.cls                                                     %%
-%% version 1.2                                                     %%
-%% 2019-08-27                                                      %%
+%% version 1.3                                                     %%
+%% date: see below                                                 %%
 %% author: Francesco Biccari                                       %%
 %% contact: biccari@gmail.com                                      %%
 %%                                                                 %%
@@ -20,9 +20,8 @@
 
 \NeedsTeXFormat{LaTeX2e}[2009/01/01]
 \ProvidesClass{unifith}%
-[2019/08/27 University of Florence thesis class]
+[2019/08/28 University of Florence thesis class]
 
-\def\UFI@classVersion{1.2}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Options %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -169,7 +168,10 @@
 
 % logo
 \newif\ifUFI@unifilogo \UFI@unifilogofalse
-\IfFileExists{unifilogo.pdf}{\UFI@unifilogotrue}{\RequirePackage{hyperref}}
+\IfFileExists{unifilogo.pdf}{\UFI@unifilogotrue}{%
+\ClassWarningNoLine{unifith}{Logo not found! You have to download it
+manually. See the documentation or just the frontispiece.}
+\RequirePackage{hyperref}}
 
 
 
