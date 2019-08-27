@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% unifith.cls                                                     %%
-%% version 1.0                                                     %%
-%% 2019-08-07                                                      %%
+%% version 1.2                                                     %%
+%% 2019-08-27                                                      %%
 %% author: Francesco Biccari                                       %%
 %% contact: biccari@gmail.com                                      %%
 %%                                                                 %%
@@ -20,9 +20,9 @@
 
 \NeedsTeXFormat{LaTeX2e}[2009/01/01]
 \ProvidesClass{unifith}%
-[2019/08/07 University of Florence thesis class]
+[2019/08/27 University of Florence thesis class]
 
-\def\UFI@classVersion{1.0}
+\def\UFI@classVersion{1.2}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Options %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -166,6 +166,12 @@
 %% redefinition of the \maketitle command to generate the titlepage %
 
 %% GENERAL COMMANDS
+
+% logo
+\newif\ifUFI@unifilogo \UFI@unifilogofalse
+\IfFileExists{unifilogo.pdf}{\UFI@unifilogotrue}{\RequirePackage{hyperref}}
+
+
 
 \def\UFI@subtitle{}
 \def\UFI@alttitle{}
@@ -313,7 +319,22 @@
     \vspace*{-25mm}
     %\hspace{-1cm}\includegraphics[width=6.5cm]{unifilogo}
     
-	\parbox[b][3cm][c]{0.49\linewidth}{\hspace{-1cm}\includegraphics[width=6.5cm]{unifilogo}}
+	\ifUFI@unifilogo
+		\parbox[b][3cm][c]{0.49\linewidth}{\hspace{-1cm}\includegraphics[width=6.5cm]{unifilogo.pdf}}
+	\else
+		\parbox[b][3cm][c]{0.49\linewidth}{\hspace{-1cm}
+			\setlength{\unitlength}{1mm}
+			\begin{picture}(65,27.3)(0,0)
+			\small
+			\put(0,0){\framebox(65,27.3)[0,0]{}}
+			\put(2,23){\makebox(0,0)[l]{WARNING! ATTENZIONE!}}
+			\put(2,18){\makebox(0,0)[l]{UniFi logo not found!}}
+			\put(2,11){\href{http://biccari.altervista.org/c/informatica/latex/unifilogo.pdf}{Click here to download the UniFi logo}}
+			\put(2,5.5){Then copy unifilogo.pdf in the folder}
+			\put(2,1.5){of your main .tex file.}
+			\end{picture}
+		}
+	\fi
 	\hfill
 	\parbox[b][2.9cm][c]{0.49\linewidth}{%
 		\raggedleft

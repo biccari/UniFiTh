@@ -53,7 +53,7 @@
 \author{\small Francesco Biccari\thanks{\href{mailto:biccari@gmail.com}{biccari@gmail.com}}}
 \title{\small Documentation of the \LaTeX\ class\\
 		\Large \textbf{\texttt{unifith.cls}}\\
-		\small \vspace{0.2cm} Version 1.0, 2019-08-07
+		\small \vspace{0.2cm} Version 1.2, 2019-08-27
 }
 \date{}
 
@@ -145,15 +145,19 @@ the \texttt{README} file.
 The \textsf{UniFiTh} package provides: the 
 \texttt{unifith.cls} class file; the documentation 
 \texttt{unifith-doc.pdf} (this file) and its source code; the logo of the 
-University of Florence; several usage examples.
+University of Florence (see next section); several usage examples.
 
 
 \textsf{UniFiTh} explicitely loads the packages \textsf{xkeyval}, \textsf{etoolbox}, \textsf{geometry}, \textsf{ifxetex}, \textsf{xltxtra}, \textsf{fontenc}, \textsf{textcomp}, \textsf{lmodern}, \textsf{caption}, \textsf{graphicx}, \textsf{color}, \textsf{booktabs}, \textsf{amsmath}, \textsf{fancyhdr}.
 Do \textbf{not} include these packages in the preamble of your document!
 
 
+\subsection[The problem of the logo]{The problem of the logo}
+\label{logo_problem}
 
+I cannot upload the logo of the University of Florence on the TeX Live and MiKTeX repositories because they accept only \href{https://en.wikipedia.org/wiki/Free_software}{\emph{free softwares}}. Therefore, if you have installed \textsf{UniFiTh} by the package manager of your \TeX\ distribution or from CTAN, after the compilation of your thesis file, you will obtain a frontispiece with a white rectangle instead of the University of Florence logo. In the white rectangle you will find the web address to download the logo in pdf format\footnote{The link to download the logo is \url{http://biccari.altervista.org/c/informatica/latex/unifilogo.pdf}}. Save the logo (keeping the name \texttt{unifilogo.pdf}) in the same folder of your main \texttt{.tex} thesis file. Then compile again and everything should be fine. 
 
+Instead, if you have manually downloaded the package from the official web page of \textsf{UniFiTh}, you do not have to do anything.
 
 \section{Usage}
 
@@ -325,7 +329,7 @@ first author surname: this order is very useful, contrary to the other typical o
 
 \end{itemize}
 
-
+\clearpage
 \appendix
 
 \section{A very brief introduction to the \TeX\ world}
@@ -515,15 +519,15 @@ For heavy usage of measurement units and to insert numbers in the form
 
 \item[\texttt{\bs g}] Shortcut for the \texttt{\bs degree} command. Example: \texttt{45\bs g} produces 45\g.
 
-\item[\texttt{\bs C}] Shortcut for the \texttt{\bs celsius} command. Example: \texttt{37\bs ,\bs C} produces 37\,\C. (Not available in math mode compiling with \texttt{xelatex}).
+\item[\texttt{\bs C}] Shortcut for the \texttt{\bs celsius} command. Example: \texttt{37\bs ,\bs C} produces 37\,\C.\footnote{Not available in math mode compiling with \texttt{xelatex}.}
 
-\item[\texttt{\bs A}] Angstrom. Example: \texttt{10\bs ,\bs A} produces 10\,\A.
+\item[\texttt{\bs A}] Angstrom. Example: \texttt{10\bs ,\bs A} produces 10\,\A.\footnote{Remember that the angstrom unit of measurement should not be used.}
 
 \item[\texttt{\bs micro}] Micro prefix. Example: \texttt{7\bs ,\bs micro m} produces 7\,\micro m.
 
 \item[\texttt{\bs ohm}] Ohm. Example: \texttt{100\bs ,\bs ohm} produces 100\,\ohm.
 
-\item[\texttt{\bs di}] Differential symbol with automatic spacing.\\ Example: 
+\item[\texttt{\bs di}] Differential symbol with automatic spacing. Example: 
 \texttt{\$\bs int x \bs di x\$} produces $\int x \di x$. If you prefer the differential symbol in roman ($\mathrm{d}$) you can give the option \texttt{romandiff} in the document class options.
 
 \item[\texttt{\bs x}] Shortcut for the \texttt{\bs times} command. E.g.: \texttt{\$7 \bs x 10\^{}5\$} produces $7 \times 10^5$.

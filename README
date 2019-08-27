@@ -18,8 +18,6 @@
       either version 1.3c of this license or any later version.
       The latest version of this license is in
         http://www.latex-project.org/lppl.txt
-      and version 1.3c or later is part of all distributions of
-      LaTeX version 2005/12/01 or later.
 
       This work has the LPPL maintenance status 'maintained'.
       The Current Maintainer of this work is Francesco Biccari.
@@ -57,22 +55,30 @@
 	  
 	  1. The simplest way to install UniFiTh is by the package manager
       of your TeX distribution (TeX Live, MiKTeX or MacTeX).
+	  Since the logo of the University cannot be uploaded on the TeX
+	  distribution repositories, you will get a Warning on the
+	  frontispiece of the thesis. You can click on this warning to
+	  obtain the original logo.
       
       2. Instead, if you want to install UniFiTh manually, you have to
-      download the unifith.zip archive from CTAN or, better, from
-      the official UniFiTh website
+      download the unifith.zip archive from the official UniFiTh website
       http://biccari.altervista.org/c/informatica/latex/unifith.php
+	  or from CTAN.
       The unifith.zip archive contains: 
         1. unifith.cls (main file)
         2. unifith-doc.pdf (manual of unifith.cls)
         3. unifith-doc.tex (source of the manual)
         4. README (this file)
-        5. unifilogo.pdf (university logo)
+        5. unifilogo.pdf (university logo, not in CTAN repository)
 		6. examples folder with several examples of usage
         7. unifith.bst (an english BibTeX style)
 	  You can simply copy unifith.cls and unifith.bst
       together with unifilogo.pdf into your local work 
 	  directory where your thesis files will live.
+	  Since the logo of the University cannot be uploaded on the TeX
+	  distribution repositories, if you have used the package from CTAN,
+	  you will get a Warning on the frontispiece of the thesis. You can
+	  click on this warning to obtain the original logo.
 	  
       3. The last possibility is copying the files of UniFiTh
 	  (discussed in the previous point) into your texmf tree
@@ -85,3 +91,7 @@
 	    <texmf>/doc/latex/unifith/README
 	    <texmf>/bibtex/bst/unifith/unifith.bst
       Then, you need to update the file database.
+	  Since the logo of the University cannot be uploaded on the TeX
+	  distribution repositories, you will get a Warning on the
+	  frontispiece of the thesis. You can click on this warning to
+	  obtain the original logo.

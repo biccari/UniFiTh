@@ -2,7 +2,7 @@
 % !TeX program = pdflatex
 % !TeX spellcheck = it_IT
 
-\documentclass[binding=0.6cm]{../unifith}
+\documentclass[binding=0.6cm]{unifith}
 
 \usepackage{microtype}
 \usepackage[italian]{babel}
@@ -26,11 +26,14 @@ per una tesi di Laurea Magistrale}
 \IDnumber{1234567}
 \course{Corso di Laurea Magistrale\\ in Fisica}
 \courseorganizer{Scuola di Scienze Matematiche,\\ Fisiche e Naturali}
-\AcademicYear{Anna Accademico 2018/2019}
-\copyyear{2019}
 \advisor{Prof. Nome Cognome}
-\advisor{Dr. Nome Cognome (corr. interno)}
-\advisor{Dr. Nome Cognome (corr. esterno)}
+\advisor{Dr. Nome Cognome}
+\advisor{Dr. Nome Cognome}
+\coadvisor{Dr. Nome Cognome}
+\AcademicYear{2018/2019}
+
+\thesistype{Tesi di Laurea Magistrale}					   
+\copyyear{2019}
 \authoremail{biccari@email.com}
 
 \examdate{16 Aprile 2019}
@@ -38,6 +41,7 @@ per una tesi di Laurea Magistrale}
 \examiner{Prof. Nome Cognome}
 \examiner{Dr. Nome Cognome}
 \versiondate{\today}
+\ISBN{000000000-0}
 
 
 
@@ -59,7 +63,7 @@ with the help of GuIT (Gruppo Utilizzatori Italiani di \TeX).
 Ho deciso di scrivere i ringraziamenti in italiano
 per dimostrare la mia gratitudine verso i membri
 del GuIT, il Gruppo Utilizzatori Italiani di \TeX, e, in particolare,
-verso il prof. Enrico Gregorio.
+verso il prof.\ Claudio Beccari e il prof.\ Enrico Gregorio.
 \end{acknowledgments}
 
 \tableofcontents
@@ -84,14 +88,14 @@ In this manual you can skip the gray text because it is just dummy text.
 
 \mainmatter
 
-\chapter{Style features of \textsf{unifith}}
+\chapter{Style features of \textsf{UniFiTh}}
 
-In this chapter I will discuss my stylistic choices of \textsf{unifith}.
+In this chapter I will discuss my stylistic choices of \textsf{UniFiTh}.
 I will show the page layout geometry and I will describe the page style.
 
 \section{Page layout}
 
-The page is fixed at the dimensions of an A4 paper, therefore you have to print your thesis on A4 paper to obtain the best results. The font dimension is fixed at 11\,pt. The text column and the margins are chosen to fill to the best an A4 paper while keeping a reasonable line length (396\, pt) for a good readability. The text height and the text width are in golden ratio (\textasciitilde 1.6180) as well as the outer and inner margins in a two-side document after binding margin removal. Also the top margin (excluding the header) and bottom margin are in the golden ratio. In Fig.~\ref{layout} a sketch of the \textsf{unifith} page layout is shown.
+The page is fixed at the dimensions of an A4 paper, therefore you have to print your thesis on A4 paper to obtain the best results. The font dimension is fixed at 11\,pt. The text column and the margins are chosen to fill to the best an A4 paper while keeping a reasonable line length (396\, pt) for a good readability. The text height and the text width are in golden ratio (\textasciitilde 1.6180) as well as the outer and inner margins in a two-side document after binding margin removal. Also the top margin (excluding the header) and bottom margin are in the golden ratio. In Fig.~\ref{layout} a sketch of the \textsf{UniFiTh} page layout is shown.
 
 \begin{figure}[h]
 \centering
@@ -104,7 +108,7 @@ The page is fixed at the dimensions of an A4 paper, therefore you have to print 
 \put(27.05,268.16){\polygon(0,0)(139.2,0)(139.2,4.22)(0,4.22)}
 \put(-27.05,268.16){\polygon(0,0)(-139.2,0)(-139.2,4.22)(0,4.22)}
 \end{picture}
-\caption{Page layout scheme of \textsf{unifith class} using a zero binding margin.}
+\caption{Page layout scheme of \textsf{UniFiTh} class using a zero binding margin.}
 \label{layout}
 \end{figure}
 
@@ -122,18 +126,20 @@ The mathematical objects, figures and tables are numbered within the chapters (e
 x_{1,2}=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
 \end{equation}
 
-\begin{figure}[b]
-	\centering
-	\includegraphics[width=0.7\textwidth]{unifilogo}
-	\caption{Logo of the University of Florence.}
-	\label{fig:largenenough}
-\end{figure}
-
 The title page is automatically composed when the \texttt{\bs maketitle} command is given.
 The parameters needed for the title page, author, title, etc\ldots , are supplied by dedicated commands explained in the next section.
-A copy of the university logo in \texttt{pdf} format is supplied in the \textsf{unifith} package. It is shown in Fig.~\ref{fig:largenenough}.
 
+A copy of the university logo in \texttt{pdf} format is supplied in the \textsf{UniFiTh} package (read the documentation for more details). The logo is shown in Fig.~\ref{fig:largenenough}.
 
+\begin{figure}
+\centering
+\IfFileExists{unifilogo.pdf}{
+	\includegraphics[width=0.5\textwidth]{unifilogo.pdf}
+}{\href{http://biccari.altervista.org/c/informatica/latex/unifilogo.pdf}{CLICK HERE TO DOWNLOAD THE LOGO}\\
+	COMPILE AGAIN AND THE LOGO WILL BE SHOWN HERE}
+\caption{Logo of the University of Florence.}
+\label{fig:largenenough}
+\end{figure}
 
 
 
@@ -144,7 +150,7 @@ As regards the image formats, please use vector images as much as possible! Use 
 A very simple table is show in Tab.~\ref{tab:letters}. Remember to typeset
 always the table caption above the table. Do not use vertical lines.
 
-\begin{table}
+\begin{table}[b]
 \caption{This is a simple table.}
 \label{tab:letters}
 \centering
@@ -175,9 +181,9 @@ In this manual you can skip the gray text because it is just dummy text.
 
 
 \appendix
-\chapter{Special commands provided by \textsf{unifith}}
+\chapter{Special commands provided by \textsf{UniFiTh}}
 
-\textsf{Unifith} provides some special commands, particularly useful for scientific works. You can use for example the roman shape, instead of the italic, for the imaginary unit (\texttt{\bs iu}) and Napier's number (\texttt{\bs eu}):
+\textsf{UniFiTh} provides some special commands, particularly useful for scientific works. You can use for example the roman shape, instead of the italic, for the imaginary unit (\texttt{\bs iu}) and Napier's number (\texttt{\bs eu}):
 \begin{equation}
 \eu^{\iu\pi}+1=0
 \end{equation}
@@ -188,7 +194,7 @@ There are also two commands to speed up the writing of derivatives. In the follo
 \end{equation}
 
 
-\textsf{Unifith} provides also 4 commands to improve the writing of subscripts, \texttt{\bs rb} and \texttt{\bs tb}, and superscripts, \texttt{\bs rp} and \texttt{\bs tp}. Two of these commands, \texttt{\bs rb} and \texttt{\bs rp}, can be used both in text and in math mode and compose their argument in roman. The other two, \texttt{\bs tb} and \texttt{\bs tp}, can be used only in text mode and compose their argument as are. Here it is an usage example of \texttt{\bs rb} and \texttt{\bs rp}:
+\textsf{UniFiTh} provides also 4 commands to improve the writing of subscripts, \texttt{\bs rb} and \texttt{\bs tb}, and superscripts, \texttt{\bs rp} and \texttt{\bs tp}. Two of these commands, \texttt{\bs rb} and \texttt{\bs rp}, can be used both in text and in math mode and compose their argument in roman. The other two, \texttt{\bs tb} and \texttt{\bs tp}, can be used only in text mode and compose their argument as are. Here it is an usage example of \texttt{\bs rb} and \texttt{\bs rp}:
 \[
 a_b \neq a\rb{b}\qquad a^b \neq a\rp{b}
 \]
@@ -215,7 +221,7 @@ In the following dummy text you can observe the usage of \texttt{\bs mnote} comm
 % bibliography
 %\cleardoublepage
 %\phantomsection
-%\bibliographystyle{sapthesis} % BibTeX style
+%\bibliographystyle{UniFiTh} % BibTeX style
 %\bibliography{bibliography} % BibTeX database without .bib extension
 
 \end{document}

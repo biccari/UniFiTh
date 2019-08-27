@@ -2,7 +2,7 @@
 % !TeX program = pdflatex
 % !TeX spellcheck = en_US
 
-\documentclass[binding=0.6cm]{../unifith}
+\documentclass[binding=0.6cm]{unifith}
 
 \usepackage{microtype}
 \usepackage[english]{babel}
@@ -18,26 +18,27 @@
 \newcommand{\bs}{\textbackslash}
 
 % Commands for the titlepage
-\title{Esempio d'uso della classe UniFiTh\\
-	per una tesi di Dottorato}
-\alttitle{Titolo alternativo opzionale, di solito in inglese nelle facoltà scientifiche}
+\title{Usage example of the UniFiTh class\\ for a PhD thesis}
+%\subtitle{Subtitle}							  
+\alttitle{Optional alternative or translated title}
 \author{Francesco Biccari}
 \IDnumber{1234567}
 \course{Corso di Dottorato\\ in Fisica e Astronomia}
 \courseorganizer{Dipartimento di Fisica e Astronomia}
 \cycle{Ciclo XXXV}
+\advisor{Prof. Name Surname}
+\advisor{Dr. Name Surname}
+\coadvisor{Dr. Name Surname}
 \AcademicYear{2018/2019}
+
 \thesistype{PhD thesis}
-\copyyear{2018}
-\advisor{Prof. Nome Cognome}
-\advisor{Dr. Nome Cognome}
-\coadvisor{Dr. Nome Cognome}
+\copyyear{2019}
 \authoremail{biccari@email.com}
 
-\examdate{16 Febbraio 2018}
-\examiner{Prof. Nome Cognome}
-\examiner{Prof. Nome Cognome}
-\examiner{Dr. Nome Cognome}
+\examdate{16 April 2019}
+\examiner{Prof. Name Surname}
+\examiner{Prof. Name Surname}
+\examiner{Dr. Name Surname}
 \versiondate{\today}
 \ISBN{000000000-0}
 
@@ -53,7 +54,7 @@
 
 \begin{abstract}
 This document is an example which shows the main features of
-the \LaTeXe\ class \texttt{UniFiTh.cls} developed by Francesco Biccari
+the \LaTeXe\ class \texttt{unifith.cls} developed by Francesco Biccari
 with the help of GuIT (Gruppo Utilizzatori Italiani di \TeX).
 \end{abstract}
 
@@ -61,7 +62,7 @@ with the help of GuIT (Gruppo Utilizzatori Italiani di \TeX).
 Ho deciso di scrivere i ringraziamenti in italiano
 per dimostrare la mia gratitudine verso i membri
 del GuIT, il Gruppo Utilizzatori Italiani di \TeX, e, in particolare,
-verso il prof. Enrico Gregorio.
+verso il prof.\ Claudio Beccari e il prof.\ Enrico Gregorio.
 \end{acknowledgments}
 
 \tableofcontents
@@ -106,7 +107,7 @@ The page is fixed at the dimensions of an A4 paper, therefore you have to print 
 \put(27.05,268.16){\polygon(0,0)(139.2,0)(139.2,4.22)(0,4.22)}
 \put(-27.05,268.16){\polygon(0,0)(-139.2,0)(-139.2,4.22)(0,4.22)}
 \end{picture}
-\caption{Page layout scheme of \textsf{UniFiTh class} using a zero binding margin.}
+\caption{Page layout scheme of \textsf{UniFiTh} class using a zero binding margin.}
 \label{layout}
 \end{figure}
 
@@ -116,7 +117,7 @@ The page is fixed at the dimensions of an A4 paper, therefore you have to print 
 The captions have a smaller font respect to the text and the label is in boldface. The appearance of the margin notes has been improved.
 They have the same font dimension of the footnotes and are typed in italics.
 Moreover I defined a new command to typeset margin note aligned to the left on the right page and vice versa on the left page.
-Notice that if a binding margin greater than 1.5\, cm is used, the dimensions of the margin notes become too small and very ugly.
+Notice that if a binding margin greater than 1.5\,cm is used, the dimensions of the margin notes become too small and very ugly.
 Do not use them in this case.
 
 The mathematical objects, figures and tables are numbered within the chapters (e.g. 1.1, 1.2,\ldots for the first chapter, 2.1, 2.2 for the second one and so on\ldots). See for example the number of this simple equation
@@ -127,11 +128,15 @@ x_{1,2}=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
 
 The title page is automatically composed when the \texttt{\bs maketitle} command is given.
 The parameters needed for the title page, author, title, etc\ldots , are supplied by dedicated commands explained in the next section.
-Two copies of the university logo in \texttt{pdf} format, one for color printing and the other one for black and white printing, are supplied in the \textsf{UniFiTh} package. They are shown in Fig.~\ref{fig:largenenough}.
+
+A copy of the university logo in \texttt{pdf} format is supplied in the \textsf{UniFiTh} package (read the documentation for more details). The logo is shown in Fig.~\ref{fig:largenenough}.
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\textwidth]{unifilogo}
+\IfFileExists{unifilogo.pdf}{
+	\includegraphics[width=0.5\textwidth]{unifilogo.pdf}
+}{\href{http://biccari.altervista.org/c/informatica/latex/unifilogo.pdf}{CLICK HERE TO DOWNLOAD THE LOGO}\\
+COMPILE AGAIN AND THE LOGO WILL BE SHOWN HERE}
 \caption{Logo of the University of Florence.}
 \label{fig:largenenough}
 \end{figure}
@@ -204,7 +209,7 @@ We have also \texttt{\bs x} as abbreviation of \texttt{\bs times}: \texttt{\$7 \
 \]
 
 Finally we have defined the color \textsf{unifiblue} which is the official color
-of University of Florence. It is defined as RGB(0,82.12,146.88). \textcolor{unifiblue}{This text is written with the color \textsf{unifiblue}.}
+of the University of Florence. It is defined as RGB(0,82.12,146.88). \textcolor{unifiblue}{This text is written with the color \textsf{unifiblue}.}
 
 In the following dummy text you can observe the usage of \texttt{\bs mnote} command which typesets fancy margin notes.
 
