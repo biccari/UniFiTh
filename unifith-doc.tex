@@ -13,6 +13,7 @@
 \usepackage[varg,cmintegrals,cmbraces]{newtxmath}
 \usepackage{microtype}
 \usepackage{graphicx}
+\usepackage{curve2e}
 \usepackage{color}
 \definecolor{gray}{gray}{0.4}
 \definecolor{sfondoblu}{rgb}{0.94,0.97,1}
@@ -25,7 +26,7 @@
 	frameround=tttt,
 	frame=tlrb,
 	escapechar=|,
-	morekeywords={submitdate, cycle,  courseorganizer, AcademicYear, copyyear, Faculty, course, PhDorganizer, IDnumber, advisor, examdate, examiner, authoremail, frontmatter, mainmatter, maketitle, tableofcontents, chapter, appendix, backmatter, dedication, selectlanguage,alttitle,thesistype},
+	morekeywords={submitdate, cycle,  courseorganizer, AcademicYear, copyyear, Faculty, course, PhDorganizer, IDnumber, advisor, examdate, examiner, authoremail, frontmatter, mainmatter, maketitle, tableofcontents, chapter, appendix, backmatter, dedication, selectlanguage,alttitle,thesistype,phantomsection},
 	columns=flexible
 }
 
@@ -50,10 +51,10 @@
 \newcommand{\bs}{\textbackslash}
 \newcommand{\sq}{\textquotesingle}
 
-\author{\small Francesco Biccari\thanks{\href{mailto:biccari@gmail.com}{biccari@gmail.com}}}
+\author{\small Francesco Biccari\\\small(\href{mailto:biccari@gmail.com}{biccari@gmail.com})}
 \title{\small Documentation of the \LaTeX\ class\\
 		\Large \textbf{\texttt{unifith.cls}}\\
-		\small \vspace{0.2cm} Version 1.3, 2019-08-28
+		\small \vspace{0.2cm} Version 1.6, 2021-10-01
 }
 \date{}
 
@@ -99,6 +100,8 @@
   % measurement unit
   \providecommand*{\un}[1]{\ensuremath{\mathrm{\,#1}}}
   
+  
+  \newcommand{\unifith}{\textsf{UniFiTh}}
   
 \begin{document}
 \maketitle
@@ -148,7 +151,7 @@ The \textsf{UniFiTh} package provides: the
 University of Florence (see next section); several usage examples.
 
 
-\textsf{UniFiTh} explicitely loads the packages \textsf{xkeyval}, \textsf{etoolbox}, \textsf{geometry}, \textsf{ifxetex}, \textsf{xltxtra}, \textsf{fontenc}, \textsf{textcomp}, \textsf{lmodern}, \textsf{caption}, \textsf{graphicx}, \textsf{color}, \textsf{booktabs}, \textsf{amsmath}, \textsf{fancyhdr}.
+\textsf{UniFiTh} explicitely loads the packages \textsf{xkeyval}, \textsf{etoolbox}, \textsf{geometry}, \textsf{ifxetex}, \textsf{fontspec}, \textsf{fontenc}, \textsf{textcomp}, \textsf{lmodern}, \textsf{caption}, \textsf{graphicx}, \textsf{color}, \textsf{booktabs}, \textsf{amsmath}, \textsf{fancyhdr}.
 Do \textbf{not} include these packages in the preamble of your document!
 
 
@@ -182,6 +185,8 @@ The following options can be passed to the \texttt{\bs documentclass} command.
 
 \begin{description}
 
+\item[\texttt{a4paper/a5paper/b5paper}] Choose one of these three options to set the paper format. The default value is \texttt{a4paper}.
+\item[\texttt{layout=\textsl{a5paper/b5paper}}] If, for some reason, it is impossible to print on A5 or B5 directly (printer not supporting those formats, paper not available, ...), it is possible to specify the A5 or B5 layout, maintaining the A4 paper format. In this case some cropmarks will be printed to show where the page should be cut.
 \item[\texttt{draft}] The usual \texttt{draft} option of the \LaTeX\ Standard Classes.
 \item[\texttt{oneside}] The usual \texttt{oneside} option of the \LaTeX\ Standard Classes.
 \item[\texttt{twoside}] (default) The usual \texttt{twoside} option of the \LaTeX\ Standard Classes.
@@ -206,55 +211,61 @@ in the preamble.
 \begin{description}
 \item[\texttt{\bs title\{\dots\}}] Mandatory. Title.
 
-\item[\texttt{\bs subtitle\{\dots\}}] Optional. Subtitle (try to avoid a subtitle).
+\item[\texttt{\bs subtitle\{\dots\}}] Optional. Subtitle (try to avoid a subtitle). An alias of this coomand is \texttt{\bs alttitle\{\dots\}} (alternative title).
 
-\item[\texttt{\bs author\{\dots\}}] Mandatory. Author (student's name).
+\item[\texttt{\bs author\{\dots\}}] Mandatory. Author (student's name). See the \texttt{fem} class option described in the previous section.
 
 \item[\texttt{\bs IDnumber\{\dots\}}] Mandatory. ID number (\textit{matricola} in Italian).
 
 \item[\texttt{\bs course\{\dots\}}] Mandatory. Use the official Italian name of the course.
 
-\item[\texttt{\bs courseorganizer\{\dots\}}] Mandatory. Course organizer.
+\item[\texttt{\bs cycle\{\dots\}}] Mandatory only for PhD's. Use the form: \texttt{\bs cycle\{XXII\}}
+
+\item[\texttt{\bs courseorganizer\{\dots\}}] Mandatory. Course organizer (for example Scuola di Scienze Matematiche Fisiche e Naturali). The usual \bs\bs can be use to break the lines.
 
 \item[\texttt{\bs AcademicYear\{\dots\}}] Academic Year.
-
-\item[\texttt{\bs copyyear\{\dots\}}] Mandatory. Copyright year (usually the 
-graduation year).
-
-\item[\texttt{\bs thesistype\{\dots\}}] Optional. Type of thesis (usually PhD thesis, Master thesis, and so on.). 
 
 \item[\texttt{\bs advisor\{\dots\}}] You must specify at least one advisor.
 If you have more than one advisor, put several advisor commands in the correct order:\\
 \texttt{\bs advisor\{Prof.~Pippo\}} \texttt{\bs advisor\{Dr.~Pluto\}}
 
-\item[\texttt{\bs coadvisor[\dots]\{\dots\}}] Optional. Co-advisors of the thesis. 
-Same syntax of the \texttt{\bs advisor} command. If the optional argument \texttt{ext} is specified, ``External advisor'' will be printed instead of ``Co-Advisor''.
+\item[\texttt{\bs coadvisor\{\dots\}}] Optional. Co-advisors of the thesis. 
+Same syntax of the \texttt{\bs advisor} command.
 
-\item[\texttt{\bs reviewer\{\dots\}}] Optional. Reviewers of the thesis. 
-Same syntax of the \texttt{\bs advisor} command. The list of the reviewer is preceded by the a text which can be specified by the \texttt{\bs reviewerlabel\{\dots\}} command.
+\item[\texttt{\bs customcoadvisorlabel\{\dots\}}] Optional. Specify the label for co-advisors. It can be used to print ``external advisor'' or similar labels.
 
-\item[\texttt{\bs authoremail\{\dots\}}] Mandatory. Email of the thesis author.
-It is automatically hyper-linked if \textsf{hyperref} package is loaded.
+\item[\texttt{\bs director\{\dots\}}] Optional. Director of the PhD program. Head of the Specialization degree. Same syntax of the \texttt{\bs advisor} command.
 
-\item[\texttt{\bs versiondate\{\dots\}}] Optional. Date version of the thesis.
+\item[\texttt{\bs customdirectorlabel\{\dots\}}] Optional. Specify the label for director.
 
-\item[\texttt{\bs website\{\dots\}}] Optional. Thesis website. Automatically 
-hyper-linked if \textsf{hyperref} package is loaded.
+\end{description}
 
-\item[\texttt{\bs ISBN\{\dots\}}] Optional. ISBN
-
-\item[\texttt{\bs copyrightstatement\{\dots\}}] Optional. Specify a copyright statement that will be printed in place of the default one.
-
-
+Together with the title page, \unifith\ will also compose an information page just after the title page. See also the \texttt{\bs noexaminfo} class option described in a previous section. Here follow the necessary commands to compose this page.
+\begin{description}
 \item[\texttt{\bs examdate\{\dots\}}] Optional. Date of the final exam.\\
 Example: \texttt{\bs examdate\{16 February 2010\}}.
 
 \item[\texttt{\bs examiner[\dots]\{\dots\}}] Optional. Specifies the members of the
 board of examiners of the final exam. Usage similar to \texttt{\bs advisor} command. The optional argument can be used to specify the role of that examiner in the commission.
 
-\item[\texttt{\bs cycle\{\dots\}}] Mandatory only for PhD's. Use the form: \texttt{\bs cycle\{XXII\}}
+\item[\texttt{\bs thesistype\{\dots\}}] Optional. Type of thesis (usually PhD thesis, Master thesis, and so on). 
 
-\item[\texttt{\bs director\{\dots\}}] Only for Specialization. Mandatory.
+\item[\texttt{\bs ISBN\{\dots\}}] Optional. ISBN
+
+\item[\texttt{\bs copyyear\{\dots\}}] Mandatory. Copyright year (usually the 
+graduation year).
+
+\item[\texttt{\bs copyrightstatement\{\dots\}}] Optional. Specify a copyright statement that will be printed in place of the default one.
+
+\item[\texttt{\bs versiondate\{\dots\}}] Optional. Date version of the thesis.
+
+\item[\texttt{\bs website\{\dots\}}] Optional. Thesis website. Automatically 
+hyper-linked if \textsf{hyperref} package is loaded.
+
+\item[\texttt{\bs authoremail\{\dots\}}] Mandatory. Email of the thesis author.
+It is automatically hyper-linked if \textsf{hyperref} package is loaded.
+
+\item[\texttt{\bs reviewer\{\dots\}}] Optional. Reviewers of the thesis (typically this applies to PhD theses only). Same syntax of the \texttt{\bs advisor} command. The list of the reviewer is preceded by the a text which can be specified by the \texttt{\bs reviewerlabel\{\dots\}} command.
 
 
 \end{description}
@@ -284,7 +295,7 @@ Example of usage: \texttt{\bs textcolor\{unifiblue\}\{blah blah\}}
 
 \begin{itemize}
 
-\item Do \textbf{not} change the default layout. If you want to change the interline spacing, do not use the \texttt{\bs linespread} command. Load instead the \textsf{setspace} package and use, for example, the \texttt{\bs onehalfspacing} command.
+\item Do \textbf{not} change the default layout.
 
 \item Do \textbf{not} load the packages already loaded by \textsf{UniFiTh} (see Sec.~\ref{requirements_installation}).
 
@@ -347,7 +358,7 @@ The following list of \LaTeX\ manuals, may be especially useful for Italian auth
 \item \href{http://www.lorenzopantieri.net/LaTeX_files/ArteLaTeX.pdf}{\textsc{L. 
 Pantieri \& T. Gordini}, \textit{L'arte di scrivere con} \LaTeX, (2017)}
 
-\item \href{http://mirror.ctan.org/info/symbols/comprehensive/symbols-a4.pdf}{\textsc{S. Pakin}, \textit{The comprehensive} \LaTeX\ \textit{symbol list}, (2017)}
+\item \href{http://mirror.ctan.org/info/symbols/comprehensive/symbols-a4.pdf}{\textsc{S. Pakin}, \textit{The comprehensive} \LaTeX\ \textit{symbol list}, (2021)}
 
 \item \href{http://profs.sci.univr.it/~gregorio/breveguida.pdf}{\textsc{E. Gregorio}, \LaTeX\textit{: breve guida ai pacchetti di uso pi\`u comune}, (2010)}
 \end{itemize}
@@ -535,8 +546,165 @@ For heavy usage of measurement units and to insert numbers in the form
 \end{description}
 
 
+\clearpage
+\section{Frequently Asked Questions}
+
+\subsection{How can I increase the font size?}
+
+The default font used in \unifith\ is Latin Modern. The default font size is 11\,pt using A4 and 10\,pt using A5 and B5. At the moment it is impossible to change the font size unless you modify the \unifith\ class file (\texttt{unifith.cls}). The reason for this choice is to maintain a common format for all the theses.
 
 
+\subsection{How can I increase the line-spacing?}
+
+The line-spacing in typography is defined as the distance between two lines. A strange ``tradition'' in Italy is to write the thesis with a double line-spacing. This is an incredibly large number. The lines are so separated that the effect is very ugly. Two reasons are behind this choice. The first one is that a lot of space is available for your professor to comment your text. The second one is that, in this way, the thesis is thicker.
+
+This effect is amplified when you use Microsoft Word because Word defines the line-spacing in a different way with respect to the typical definition. And usually people do not know that. Therefore, when you set the value of 2 for the line-spacing in Word, actually you obtain a line-spacing of 2.34 according to the normal definition of the term! (Word adds an extra 17\% of space, I do not know why).
+
+Of course this large value of the line-spacing is a nonsense. It is known in typography that the best value ranges between 1.20 and 1.45. In \LaTeX\ the default line-spacing is 1.20, which means that, if you use a font size of 10\,pt, the line-spacing is 12\,pt. In \unifith\ the line-spacing is set to 1.20. Nowadays, professors typically correct a thesis by using the comment tools of the their pdf viewer. There are still some who want to print it and want a double line-spacing. In that case, give them a copy with a double line-spacing but ask them to have the permission to print it in a more normal line-spacing, in order to save paper.
+
+If you want to change the line-spacing, do not use the \texttt{\bs linespread} command. Load instead the \textsf{setspace} package and use, for example, the \texttt{\bs onehalfspacing} command.
+
+
+
+\subsection{Single sided or double sided printing?}
+
+A strange ``tradition'' in Italy is to print the theses only on one side of the paper sheets. In the past this was justified because a thesis was manually typed by a \href{https://en.wikipedia.org/wiki/Typewriter}{typewriter machine}.
+Today, where the theses are all composed by a computer, this ``tradition'' is kept mainly because in this way the professors and the students are happy to see a thicker book.
+
+Of course this is a nonsense. Not only because the bulky effect is only aesthetic (if you open the thesis you can see that only one side is printed), but especially because it is a waste of paper. Moreover, reading a book where only the right page is printed is quite ugly and strange, isn't it? (Have you ever seen a book, containing mainly text, printed single sided?)
+
+The only real reason to print single sided is when a good paper is not available. Indeed, a low quality paper, like the one typically used for photocopies, has a grammage of 80\,g/m$^2$. It is a little bit semitransparent and this can be a problem when you print double sided, especially if you have many color images. The best approach is using a proper paper grammage of 90\,g/m$^2$ or 100\,g/m$^2$. Ask to the printing service which type of paper is more suitable to print your thesis double sided.
+
+
+\subsection{Inverted margins? How much space for binding?}
+
+Another typical question regards the margins of the thesis. Quite often the students (and incredibly also the printing services) complain about the margins of the thesis. They think that the margins are reversed because in \LaTeX\ standard classes, by default, the inner margin is smaller than the outer margin. The same behaviour, but with slightly different proportions, is adopted in \unifith\ (see Figure\,\ref{layout}). Of course, they are wrong. This is the correct behavior! Indeed, as you can see in any book, the sum of the two inner margins should be more or less equal to the width of a single outer margin. This is for an aesthetic reason. Otherwise the two columns of text would be too much separated when the book is open.
+
+\begin{figure}[!b]
+\centering
+\setlength{\unitlength}{0.12mm}
+\begin{picture}(420,297)(-210,0)
+\polyline(-210,0)(210,0)(210,297)(-210,297)(-210,0)
+\Line(0,0)(0,297)
+\put(27.05,37.4){\polygon(0,0)(139.2,0)(139.2,223.8)(0,223.8)}
+\put(-27.05,37.4){\polygon(0,0)(-139.2,0)(-139.2,223.8)(0,223.8)}
+\put(27.05,268.16){\polygon(0,0)(139.2,0)(139.2,4.22)(0,4.22)}
+\put(-27.05,268.16){\polygon(0,0)(-139.2,0)(-139.2,4.22)(0,4.22)}
+\end{picture}
+\caption{A4 page layout scheme of \textsf{UniFiTh} class using a zero binding margin.}
+\label{layout}
+\end{figure}
+
+
+At this point the students usually reply ``what about the binding margin? The inner margin should be larger because some space is used by the binding process!'' This is partially true. The effect described above in Figure\,\ref{layout} is what should happen \emph{after} the binding process. For this reason there is the documentclass \texttt{binding} option in \unifith\ (see Section\,\ref{class_options}). Typical values are 6 or 7\,mm but it is always preferable to ask the printing service which is the correct value according to the binding method (be careful because many printing services are not professional and suggest arbitrarly binding margin values).
+
+\subsection{Numbered introduction and conclusions?}
+
+There is a strange ``tradition'' in Italy to not attribute a number to the Introduction and Conclusions of a thesis. Probably, only because they are usually short chapters. So it seems that they do not deserve a proper number like any other chapter.
+
+In my (and not only mine) opinion this is a nonsense. The Introduction and Conclusions chapters are part of the thesis, and they should be read to properly understand the thesis. They cannot be skipped. So why don't attribute a number to those chapters?
+
+Therefore I suggest to use the following structure of the thesis (which is the same reported in the examples in Appendix \ref{sec:PhDexample} and \ref{sec:LaMexample}).
+
+\begin{lstlisting}
+...
+
+\frontmatter
+\maketitle
+...
+
+% The chapters after the mainmatter command are numbered
+\mainmatter
+\chapter{Introduction}
+\chapter{...}
+\chapter{...}
+\chapter{...}
+\chapter{Conclusions}
+
+\backmatter
+...
+\end{lstlisting}
+
+However, if you really want to follow the nonsense of not giving a number to the Introduction and Conclusions chapter, you can do it in the following way. But keep in mind that \emph{if you do not number the Introduction and Conclusions, you cannot insert any numbered equation, table, or picture in these chapters}. Indeed, all these objects are numbered with the chapter number: Fig.\,1.2, Tab.\,3.2, Eq.\,(4.1), etc. If the chapter does not have a number, how can we assign a number to Figures, Tables, or Equations?
+
+\begin{lstlisting}
+...
+
+\frontmatter
+\maketitle
+
+% The chapters after the mainmatter command are numbered
+\mainmatter
+\chapter*{Introduction}   % The chapter* does not attribute a number
+\markboth{Introduction}{} % This command is necessary for the headings
+\chapter{...}
+\chapter{...}
+\chapter{...}
+\chapter*{Conclusions}    % The chapter* does not attribute a number
+\markboth{Conclusions}{}  % This command is necessary for the headings
+
+\backmatter
+...
+\end{lstlisting}
+
+Finally, it is worth noting that the first and last chapter of a thesis must not to be always called Introduction and Conclusions! 
+
+\subsection{How to reduce the size of the pdf?}
+
+Usually, students do not optimize the images of their thesis. This is a very bad practice and one of the typical consequences is the excessive large size of the final pdf. The topic is too long to be covered here, however I want to provide a simple way to reduce \textit{a posteriori} the file size of the pdf.
+
+Using \href{https://www.ghostscript.com/}{Ghostscript} we can ``distill'' a pdf file, which means interpreting it and re-enconding it again. This is just a small list of possible commands (commands are intended for Windows 64 bit but they can easily applied to other operating systems changing the name of the Ghostscript executable):
+
+\begin{lstlisting}
+BEST QUALITY (Flate image encoding)
+
+gswin64c.exe -q -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite -sOutputFile=output.pdf
+-dAutoFilterColorImages=false -dAutoFilterGrayImages=false 
+-dColorImageFilter=/FlateEncode -dGrayImageFilter=/FlateEncode 
+-dPDFSETTINGS=/prepress -dCompatibilityLevel=1.5 input.pdf
+\end{lstlisting}
+
+\begin{lstlisting}
+BEST QUALITY (DECT image encoding)
+
+gswin64c.exe -q -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite -sOutputFile=output.pdf
+-dPDFSETTINGS=/prepress -dCompatibilityLevel=1.5 input.pdf
+\end{lstlisting}
+
+\begin{lstlisting}
+LOWER QUALITY (DECT image encoding)
+Substitute XXXXXXX with one of the following settings (order of descending quality):
+/printer /ebook /screen
+
+gswin64c.exe -q -dNOPAUSE -dBATCH -dSAFER -sDEVICE=pdfwrite -sOutputFile=output.pdf
+-dPDFSETTINGS=XXXXXXX -dCompatibilityLevel=1.5 input.pdf
+\end{lstlisting}
+
+\subsection{How to create an archivable pdf?}
+
+\href{https://en.wikipedia.org/wiki/PDF/A}{PDF/A} is a particular PDF format, standardized by ISO, specialized for use in the archiving and long-term preservation of electronic documents. Public and private institutions, including universities, increasingly require this form to archive electronic documents. There are several levels of PDF/A. The suggested format for a thesis is the PDF/A-2b.
+
+The best and free way to check if a pdf file is compliant to one of the PDF/A levels is to use \href{https://verapdf.org/}{veraPDF}, an open source software supported by the most important PDF associations in the world and funded by the European Commission. This software is freely available for Windows, Linux, and Mac.
+
+A PDF/A file can be generated directly in \LaTeX, properly following some rules (see TOPTesi \LaTeX\ class documentation by Claudio Beccari) however we do not have enough space to cover this topic here.
+
+A faster way is to transform the file of the thesis in a PDF/A compliant pdf file using \href{https://www.ghostscript.com/}{Ghostscript}. First of all you need to copy two files in the same directory of the pdf file you want to convert. One file is an ICC color profile and the other one is a PostScript definition file containing some information needed by the convertion process. Let us start from the ICC color profile. Since the pdf file will be viewed mainly on electronic screen, you can use a generic sRGB color profile. You can download one here: \url{https://www.color.org/srgbprofiles.xalter}. The PostScript definition file, already prepared for PDF/A file generation, can be found in the Ghostscript directory in your system (typically in the lib subfolder). Once copied (and RENAMED!) in your working directory, open it and modify the /ICCProfile variable, matching the name of the ICC color profile you downloaded, and the /Title variable, matching (reasonably) the title of your pdf.
+
+Then, launch the following command:
+
+\begin{lstlisting}
+gswin64.exe -q -dNOPAUSE -dBATCH -dNOSAFER -sDEVICE=pdfwrite -sOutputFile=output.pdf
+-dPDFA=2 -dPDFACompatibilityPolicy=1
+-sColorConversionStrategy=UseDeviceIndependentColor -sProcessColorModel=DeviceRGB
+PDFArenamed.ps input.pdf
+\end{lstlisting}
+
+
+
+
+%\subsection{Cover}
+%
+%In order to help the student to prepare the cover for the printing service, \unifith\ provides a class option \texttt{cover}. When this option is used, the thesis is not compiled, but the cover is generated as a single page pdf. This file is usually provided to the printing service to prepare the cover for the thesis. Of course the students can use their own cover or the cover provided by the printing services.
 
 
 \addtocontents{toc}{\protect\end{multicols}}

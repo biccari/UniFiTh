@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% unifith.cls                                                     %%
-%% version 1.3                                                     %%
+%% version 1.6                                                     %%
 %% date: see below                                                 %%
 %% author: Francesco Biccari                                       %%
 %% contact: biccari@gmail.com                                      %%
@@ -20,7 +20,7 @@
 
 \NeedsTeXFormat{LaTeX2e}[2009/01/01]
 \ProvidesClass{unifith}%
-[2019/08/28 University of Florence thesis class]
+[2021/10/01 University of Florence thesis class]
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -33,26 +33,42 @@
 \newif\ifUFI@customlanguage \UFI@customlanguagefalse
 \newif\ifUFI@noexaminfo \UFI@noexaminfofalse
 \newif\ifUFI@femaleauthor \UFI@femaleauthorfalse
+\def\UFI@paper{a4paper}
+\def\UFI@layout{a4paper}
+\def\UFI@fontsize{11pt}
 
 \define@key[ufi]{}{noexaminfo}[]{\UFI@noexaminfotrue}
 \define@key[ufi]{}{fem}[]{\UFI@femaleauthortrue}
 \define@key[ufi]{}{nodefaultfont}[]{\UFI@nodefaultfonttrue}
 \define@key[ufi]{}{romandiff}[]{\UFI@romandifftrue}
 \define@key[ufi]{}{binding}[0pt]{\setlength{\UFI@binding}{#1}}
-\define@key[ufi]{}{draft}[]{\PassOptionsToClass{draft}{book}}
+\define@key[ufi]{}{draft}[]{%
+\PassOptionsToClass{draft}{book}%
+%\PassOptionsToPackage{showframe}{geometry}
+}
 \define@key[ufi]{}{oneside}[]{\PassOptionsToClass{oneside}{book}}
 \define@key[ufi]{}{twoside}[]{}
+\define@key[ufi]{}{a4paper}[]{\def\UFI@paper{a4paper}}
+\define@key[ufi]{}{a5paper}[]{%
+\def\UFI@paper{a5paper}\def\UFI@layout{a5paper}\def\UFI@fontsize{10pt}}
+\define@key[ufi]{}{b5paper}[]{%
+\def\UFI@paper{b5paper}\def\UFI@layout{b5paper}\def\UFI@fontsize{10pt}}
+\define@choicekey[ufi]{}{layout}[]{a4paper,a5paper,b5paper}[]{%
+\def\UFI@layout{#1}\def\UFI@fontsize{10pt}}
 \DeclareOptionX*{\ClassError{unifith}{Option '\CurrentOption'%
   \MessageBreak is not valid}{Remove '\CurrentOption' %
   from class options}}
 \ProcessOptionsX[ufi]<>
-\LoadClass[a4paper,11pt]{book}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Page layout %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\RequirePackage[a4paper]{geometry}
+\LoadClass[\UFI@paper,\UFI@fontsize]{book}
+\RequirePackage[\UFI@paper]{geometry}
+
+% A4
+\def\UFI@layoutname{a4paper}
+\ifx\UFI@layout\UFI@layoutname %
 \geometry{textwidth=396pt,
   textheight=641pt,
   marginparsep=12pt,
@@ -61,9 +77,43 @@
   includehead,
   marginparwidth=72pt,
   heightrounded}
-  
 \if@twoside\geometry{hmarginratio=55:89}\fi
+\fi
   
+% A5
+\def\UFI@layoutname{a5paper}
+\ifx\UFI@layout\UFI@layoutname %
+\geometry{textwidth=300pt,
+  textheight=485pt,
+  marginparsep=12pt,
+  bindingoffset=\UFI@binding,
+  vmarginratio=55:89,
+  includehead,
+  marginparwidth=42pt,
+  heightrounded}
+\if@twoside\geometry{hmarginratio=55:89}\fi
+\def\UFI@papername{a4paper}
+\ifx\UFI@paper\UFI@papername%
+\geometry{layout=\UFI@layout,layouthoffset=2cm,layoutvoffset=2cm,showcrop}\fi
+\fi
+
+% B5
+\def\UFI@layoutname{b5paper}
+\ifx\UFI@layout\UFI@layoutname %
+\geometry{textwidth=340pt,
+  textheight=550pt,
+  marginparsep=12pt,
+  bindingoffset=\UFI@binding,
+  vmarginratio=55:89,
+  includehead,
+  marginparwidth=42pt,
+  heightrounded}
+\if@twoside\geometry{hmarginratio=55:89}\fi
+\def\UFI@papername{a4paper}
+\ifx\UFI@paper\UFI@papername%
+\geometry{layout=\UFI@layout,layouthoffset=2cm,layoutvoffset=2cm,showcrop}\fi
+\fi
+
 
 
 
@@ -71,7 +121,7 @@
 %% Some settings%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \RequirePackage{ifxetex}
 \ifxetex
-  \RequirePackage{xltxtra}
+  \RequirePackage{fontspec}
 \else
   \ifUFI@nodefaultfont\relax\else
     \RequirePackage[T1]{fontenc}
@@ -116,7 +166,7 @@
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}}
 
-%% ri-definition of the plain style (first page of the chapters)
+%% re-definition of the plain style (first page of the chapters)
 \fancypagestyle{plain}{%
 \renewcommand{\headrulewidth}{0pt}
 \fancyhf{}
@@ -131,24 +181,22 @@
 \g@addto@macro\frontmatter{\pagestyle{UFI@mainstyle}}
 \g@addto@macro\mainmatter{\pagestyle{UFI@mainstyle}}
 
-% fancy marginnote (not activated yet)
-% commands to redefine the marginpar command
-% maybe in future I will remove the mnote command?
-%\def \@marginparreset {%
-%        \reset@font
-%        \footnotesize
-%        \itshape
-%        \@setminipage
-%}
-%\long\def\@xmpar[#1]#2{%
-%  \@savemarbox\@marbox{\raggedleft #1}%
-%  \@savemarbox\@currbox{\raggedright #2}%
-%  \@xympar}
-%\long\def\@ympar#1{%
-%  \@savemarbox\@marbox{\raggedleft #1}%
-%  \@savemarbox\@currbox{\raggedright #1}%
-%  \@xympar}
-%  
+% fancy marginnote
+% redefine the marginpar command
+\def \@marginparreset {%
+        \reset@font
+        \small
+        \itshape
+        \@setminipage
+}
+\long\def\@xmpar[#1]#2{%
+  \@savemarbox\@marbox{\raggedleft #1}%
+  \@savemarbox\@currbox{\raggedright #2}%
+  \@xympar}
+\long\def\@ympar#1{%
+  \@savemarbox\@marbox{\raggedleft #1}%
+  \@savemarbox\@currbox{\raggedright #1}%
+  \@xympar}
 
 
 
@@ -212,17 +260,17 @@ manually. See the documentation or just the frontispiece.}
 %% Co-Advisors or External Advisor 
 \newcount\UFI@coadvisorcount
 \newtoks\UFI@coadvisortoks
-\newif\ifUFI@ext \UFI@extfalse
-\newcommand{\coadvisor}[2][]{%
+\newcommand{\coadvisor}[1]{%
   \ifnum\UFI@coadvisorcount=\z@ 
-    \UFI@coadvisortoks={#2}% 
+    \UFI@coadvisortoks={#1}% 
   \else 
-    \UFI@coadvisortoks=\expandafter{\the\UFI@coadvisortoks\\[0.75mm]#2}% 
+    \UFI@coadvisortoks=\expandafter{\the\UFI@coadvisortoks\\[0.75mm]#1}% 
   \fi 
-  \advance\UFI@coadvisorcount\@ne
-  \ifstrequal{#1}{ext}{\UFI@exttrue}{}}
+  \advance\UFI@coadvisorcount\@ne}
 
-
+\newcommand{\customcoadvisorlabel}[1]{%
+    \newcommand{\UFI@ThesisCoAdvisorLabel}{#1}
+    \newcommand{\UFI@ThesisCoAdvisorsLabel}{#1}}
 
 %% Reviewers
 \def\UFI@ReviewerLabel{}
@@ -251,6 +299,9 @@ manually. See the documentation or just the frontispiece.}
   \fi 
   \advance\UFI@directorcount\@ne}
 
+\newcommand{\customdirectorlabel}[1]{%
+    \newcommand{\UFI@ThesisDirectorLabel}{#1}
+    \newcommand{\UFI@ThesisDirectorsLabel}{#1}}
 
 %% Examiners
 \newcount\UFI@examinercount
@@ -289,37 +340,21 @@ manually. See the documentation or just the frontispiece.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% maketitle
 
-\newcommand{\UFI@maketitleGeneral}{
-
-% Errors:
-
-\if|\UFI@courseorganizerLabel|\ClassError{unifith}{You must specify the course %
-  organizer}{Example: \protect\courseorganizer{Scuola di dottorato di ...}}\fi
-\if|\UFI@courseLabel|\ClassError{unifith}{You must specify the %
-  course}{Example: \protect\course{Corso di Laurea Magistrale in Fisica}}\fi
-\if|\UFI@submitdate|\ClassError{unifith}{You must specify the %
-  thesis submission date}{Example: \protect\submitdate{August 2012} The date must be in the form Month(name) Year(number)}\fi
-\if|\UFI@copyyear|\ClassError{unifith}{You must specify the %
-  copyright year}{Example: \protect\copyyear{2012}}\fi
-\if|\UFI@IDnumber|\ClassError{unifith}{You must specify your %
-  ID number (matricola)}{Example: \protect\IDnumber{123456}}\fi
-\if|\UFI@authoremail|\ClassError{unifith}{You must specify the email of the author}{%
-  Example: \protect\authoremail{author@email.com}}\fi
-
-% Titlepage:
+\newcommand{\UFI@maketitleA}{
 
 	\begin{titlepage}
 	
 	\linespread{1}\selectfont
-
-	% questa parbox forse è meglio eliminarla sostituendola con qualcosa di più semplice e che scali verticalmente.
-	% infatti se metto tanti relatori, si sovrappone tutto.
-    \newcommand{\UFI@parbox}[2][]{\hspace{1.72cm}\parbox[t][##1][t]{11.9cm}{##2}}
+    \newlength{\UFI@parboxindent}
+    \newlength{\UFI@parboxwidth}
+    \setlength{\UFI@parboxindent}{1.72cm}
+    \setlength{\UFI@parboxwidth}{\dimexpr\textwidth-\UFI@parboxindent\relax}
+    \newcommand{\UFI@parbox}[2][]{\hspace{\UFI@parboxindent}%
+    \parbox[t][##1][t]{\UFI@parboxwidth}{##2}}
     \parindent=0pt
     \sffamily
 
     \vspace*{-25mm}
-    %\hspace{-1cm}\includegraphics[width=6.5cm]{unifilogo}
     
 	\ifUFI@unifilogo
 		\parbox[b][3cm][c]{0.49\linewidth}{\hspace{-1cm}\includegraphics[width=6.5cm]{unifilogo.pdf}}
@@ -366,8 +401,6 @@ manually. See the documentation or just the frontispiece.}
 
     \vspace{\stretch{1}}
 
-    
-
     \UFI@parbox{%
 	    \ifUFI@femaleauthor
 	      \textbf{\bfseries\UFI@CandidateLabelFemale}\\[1.5mm]
@@ -380,6 +413,7 @@ manually. See the documentation or just the frontispiece.}
 	\vspace*{1cm}
 
     \UFI@parbox{%
+        \parbox[t]{0.59\UFI@parboxwidth}{%
         \ifcase\UFI@advisorcount
           \ClassError{unifith}{You must specify at least one advisor in the preamble}%
           {E.g. \protect\advisor{Prof. Name Surname}}
@@ -388,7 +422,29 @@ manually. See the documentation or just the frontispiece.}
         \else
           \textbf{\bfseries\UFI@ThesisAdvisorsLabel}\\[2mm]
         \fi
-        \the\UFI@advisortoks
+        \the\UFI@advisortoks}
+        \hfill
+        \parbox[t]{0.39\UFI@parboxwidth}{%
+        \ifcase\UFI@directorcount
+          \relax
+        \or
+          \textbf{\bfseries\UFI@ThesisDirectorLabel}\\[2mm]
+        \else
+          \textbf{\bfseries\UFI@ThesisDirectorsLabel}\\[2mm]
+        \fi
+        \the\UFI@directortoks}
+    }
+
+	\vspace{1cm}
+
+    \UFI@parbox{%
+    \ifcase\UFI@coadvisorcount\relax
+    \or
+    \textbf{\bfseries\UFI@ThesisCoAdvisorLabel}\\[2mm]
+    \else
+    \textbf{\bfseries\UFI@ThesisCoAdvisorsLabel}\\[2mm]
+    \fi
+    \the\UFI@coadvisortoks
     }
     
     \vspace*{1cm}
@@ -396,10 +452,234 @@ manually. See the documentation or just the frontispiece.}
     \UFI@parbox{\raisebox{-0.5cm}[0pt][0pt]{\UFI@AcademicYearLabel\ \UFI@submitdate}}
     
 	\end{titlepage}
-\clearpage
-\UFI@composebacktitlepage
 }
 
+
+\newcommand{\UFI@maketitleB}{
+
+	\begin{titlepage}
+	\newlength{\UFI@parboxindent}
+    \newlength{\UFI@parboxwidth}
+	\linespread{1}\selectfont
+    \setlength{\UFI@parboxindent}{0.85cm}
+    \setlength{\UFI@parboxwidth}{\dimexpr\textwidth-\UFI@parboxindent\relax}
+    \newcommand{\UFI@parbox}[2][]{\hspace{\UFI@parboxindent}%
+    \parbox[t][##1][t]{\UFI@parboxwidth}{##2}}
+    \parindent=0pt
+    \sffamily
+
+    \vspace*{-20mm}
+    %\hspace{-1cm}\includegraphics[width=6.5cm]{unifilogo}
+    
+	\ifUFI@unifilogo
+		\parbox[b][3cm][c]{0.39\linewidth}{\hspace{-1cm}\includegraphics[width=4.5cm]{unifilogo.pdf}}
+	\else
+		\parbox[b][3cm][c]{0.39\linewidth}{%\hspace{-1cm}
+			\setlength{\unitlength}{1mm}
+			\begin{picture}(45,27.3)(0,0)
+			\footnotesize
+			\put(0,0){\framebox(52,27.3)[0,0]{}}
+			\put(2,23){\makebox(0,0)[l]{WARNING! ATTENZIONE!}}
+			\put(2,18){\makebox(0,0)[l]{UniFi logo not found!}}
+			\put(2,11){\href{http://biccari.altervista.org/c/informatica/latex/unifilogo.pdf}{Click here to download the UniFi logo}}
+			\put(2,5.5){Then copy unifilogo.pdf in the folder}
+			\put(2,1.5){of your main .tex file.}
+			\end{picture}
+		}
+	\fi
+	\hfill
+	\parbox[b][3cm][c]{0.49\linewidth}{%
+		\raggedleft
+		\normalfont\footnotesize\scshape
+		\textsc{\UFI@courseorganizerLabel}\\[2mm]
+		\UFI@courseLabel
+		\if?\UFI@cycle?\relax\else\\\UFI@cycle\fi
+	}
+    
+    \nointerlineskip
+    \vspace{\stretch{0.5}}
+    \nointerlineskip
+
+    \UFI@parbox{\LARGE\@title\par}
+	
+	\if|\UFI@subtitle|
+	  \if|\UFI@alttitle|
+	    \relax
+	  \else
+	    \vspace*{1.5cm}
+	    \UFI@parbox{\LARGE\UFI@alttitle\par}
+	  \fi
+	\else
+	  \vspace{0.4cm}
+	  \UFI@parbox{\linespread{1.2}\selectfont\large\UFI@subtitle\par}
+	\fi
+
+    \vspace{\stretch{1}}
+
+    \UFI@parbox{%
+	    \ifUFI@femaleauthor
+	      \textbf{\bfseries\UFI@CandidateLabelFemale}\\[1.5mm]
+	    \else
+	      \textbf{\bfseries\UFI@CandidateLabel}\\[1.5mm]
+	    \fi
+	    \@author\hspace{0.2cm} (\UFI@IDnumberLabel\ \UFI@IDnumber)
+	}
+	
+	\vspace*{1cm}
+    \UFI@parbox{%
+        \parbox[t]{0.59\UFI@parboxwidth}{%
+        \ifcase\UFI@advisorcount
+          \ClassError{unifith}{You must specify at least one advisor in the preamble}%
+          {E.g. \protect\advisor{Prof. Name Surname}}
+        \or
+          \textbf{\bfseries\UFI@ThesisAdvisorLabel}\\[2mm]
+        \else
+          \textbf{\bfseries\UFI@ThesisAdvisorsLabel}\\[2mm]
+        \fi
+        \the\UFI@advisortoks}
+        \hfill
+        \parbox[t]{0.39\UFI@parboxwidth}{%
+        \ifcase\UFI@directorcount
+          \relax
+        \or
+          \textbf{\bfseries\UFI@ThesisDirectorLabel}\\[2mm]
+        \else
+          \textbf{\bfseries\UFI@ThesisDirectorsLabel}\\[2mm]
+        \fi
+        \the\UFI@directortoks}
+    }
+
+	\vspace{1cm}
+
+    \UFI@parbox{%
+    \ifcase\UFI@coadvisorcount\relax
+    \or
+    \textbf{\bfseries\UFI@ThesisCoAdvisorLabel}\\[2mm]
+    \else
+    \textbf{\bfseries\UFI@ThesisCoAdvisorsLabel}\\[2mm]
+    \fi
+    \the\UFI@coadvisortoks}
+    
+    \vspace*{1.5cm}
+
+    \UFI@parbox{\raisebox{0cm}[0pt][0pt]{\UFI@AcademicYearLabel\ \UFI@submitdate}}
+    
+	\end{titlepage}
+}
+
+
+\newcommand{\UFI@maketitleC}{
+
+	\begin{titlepage}
+	
+	\linespread{1}\selectfont
+    \newlength{\UFI@parboxindent}
+    \newlength{\UFI@parboxwidth}
+    \setlength{\UFI@parboxindent}{0.85cm}
+    \setlength{\UFI@parboxwidth}{\dimexpr\textwidth-\UFI@parboxindent\relax}
+    \newcommand{\UFI@parbox}[2][]{\hspace{\UFI@parboxindent}%
+    \parbox[t][##1][t]{\UFI@parboxwidth}{##2}}
+    \parindent=0pt
+    \sffamily
+
+    \vspace*{-20mm}
+    %\hspace{-1cm}\includegraphics[width=6.5cm]{unifilogo}
+    
+	\ifUFI@unifilogo
+		\parbox[b][3cm][c]{0.39\linewidth}{\hspace{-1cm}\includegraphics[width=4.5cm]{unifilogo.pdf}}
+	\else
+		\parbox[b][3cm][c]{0.39\linewidth}{%\hspace{-1cm}
+			\setlength{\unitlength}{1mm}
+			\begin{picture}(45,27.3)(0,0)
+			\footnotesize
+			\put(0,0){\framebox(52,27.3)[0,0]{}}
+			\put(2,23){\makebox(0,0)[l]{WARNING! ATTENZIONE!}}
+			\put(2,18){\makebox(0,0)[l]{UniFi logo not found!}}
+			\put(2,11){\href{http://biccari.altervista.org/c/informatica/latex/unifilogo.pdf}{Click here to download the UniFi logo}}
+			\put(2,5.5){Then copy unifilogo.pdf in the folder}
+			\put(2,1.5){of your main .tex file.}
+			\end{picture}
+		}
+	\fi
+	\hfill
+	\parbox[b][3cm][c]{0.49\linewidth}{%
+		\raggedleft
+		\normalfont\footnotesize\scshape
+		\textsc{\UFI@courseorganizerLabel}\\[2mm]
+		\UFI@courseLabel
+		\if?\UFI@cycle?\relax\else\\\UFI@cycle\fi
+	}
+    
+    \nointerlineskip
+    \vspace{\stretch{0.5}}
+    \nointerlineskip
+
+    \UFI@parbox{\LARGE\@title\par}
+	
+	\if|\UFI@subtitle|
+	  \if|\UFI@alttitle|
+	    \relax
+	  \else
+	    \vspace*{1.5cm}
+	    \UFI@parbox{\LARGE\UFI@alttitle\par}
+	  \fi
+	\else
+	  \vspace{0.4cm}
+	  \UFI@parbox{\linespread{1.2}\selectfont\large\UFI@subtitle\par}
+	\fi
+
+    \vspace{\stretch{1}}
+
+    \UFI@parbox{%
+	    \ifUFI@femaleauthor
+	      \textbf{\bfseries\UFI@CandidateLabelFemale}\\[1.5mm]
+	    \else
+	      \textbf{\bfseries\UFI@CandidateLabel}\\[1.5mm]
+	    \fi
+	    \@author\hspace{0.2cm} (\UFI@IDnumberLabel\ \UFI@IDnumber)
+	}
+	
+	\vspace*{1cm}
+    \UFI@parbox{%
+        \parbox[t]{0.59\UFI@parboxwidth}{%
+        \ifcase\UFI@advisorcount
+          \ClassError{unifith}{You must specify at least one advisor in the preamble}%
+          {E.g. \protect\advisor{Prof. Name Surname}}
+        \or
+          \textbf{\bfseries\UFI@ThesisAdvisorLabel}\\[2mm]
+        \else
+          \textbf{\bfseries\UFI@ThesisAdvisorsLabel}\\[2mm]
+        \fi
+        \the\UFI@advisortoks}
+        \hfill
+        \parbox[t]{0.39\UFI@parboxwidth}{%
+        \ifcase\UFI@directorcount
+          \relax
+        \or
+          \textbf{\bfseries\UFI@ThesisDirectorLabel}\\[2mm]
+        \else
+          \textbf{\bfseries\UFI@ThesisDirectorsLabel}\\[2mm]
+        \fi
+        \the\UFI@directortoks}
+    }
+
+	\vspace{1cm}
+
+    \UFI@parbox{%
+    \ifcase\UFI@coadvisorcount\relax
+    \or
+    \textbf{\bfseries\UFI@ThesisCoAdvisorLabel}\\[2mm]
+    \else
+    \textbf{\bfseries\UFI@ThesisCoAdvisorsLabel}\\[2mm]
+    \fi
+    \the\UFI@coadvisortoks}
+    
+    \vspace*{1.5cm}
+
+    \UFI@parbox{\raisebox{0cm}[0pt][0pt]{\UFI@AcademicYearLabel\ \UFI@submitdate}}
+    
+	\end{titlepage}
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -485,8 +765,35 @@ manually. See the documentation or just the frontispiece.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Choosing the right \maketitle according to the thesis type %%%%%%%
 
-\renewcommand{\maketitle}{\UFI@maketitleGeneral}
-
+\renewcommand{\maketitle}{%
+% Errors:
+\if|\UFI@courseorganizerLabel|\ClassError{unifith}{You must specify the course %
+  organizer}{Example: \protect\courseorganizer{Scuola di dottorato di ...}}\fi
+\if|\UFI@courseLabel|\ClassError{unifith}{You must specify the %
+  course}{Example: \protect\course{Corso di Laurea Magistrale in Fisica}}\fi
+\if|\UFI@submitdate|\ClassError{unifith}{You must specify the %
+  thesis submission date}{Example: \protect\submitdate{August 2012} The date must be in the form Month(name) Year(number)}\fi
+\if|\UFI@copyyear|\ClassError{unifith}{You must specify the %
+  copyright year}{Example: \protect\copyyear{2012}}\fi
+\if|\UFI@IDnumber|\ClassError{unifith}{You must specify your %
+  ID number (matricola)}{Example: \protect\IDnumber{123456}}\fi
+\if|\UFI@authoremail|\ClassError{unifith}{You must specify the email of the author}{%
+  Example: \protect\authoremail{author@email.com}}\fi
+%titlepage
+\def\UFI@layoutname{a4paper}
+\ifx\UFI@layout\UFI@layoutname
+\UFI@maketitleA
+\fi
+\def\UFI@layoutname{a5paper}
+\ifx\UFI@layout\UFI@layoutname
+\UFI@maketitleB
+\fi
+\def\UFI@layoutname{b5paper}
+\ifx\UFI@layout\UFI@layoutname
+\UFI@maketitleC
+\fi
+\clearpage
+\UFI@composebacktitlepage}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -524,12 +831,10 @@ manually. See the documentation or just the frontispiece.}
   \newcommand{\UFI@IDnumberLabel}{ID number}
   \newcommand{\UFI@ThesisAdvisorLabel}{Thesis Advisor}
   \newcommand{\UFI@ThesisAdvisorsLabel}{Thesis Advisors}
-  \newcommand{\UFI@ThesisCoAdvisorLabel}{Co-Advisor}
-  \newcommand{\UFI@ThesisCoAdvisorsLabel}{Co-Advisors}
-  \newcommand{\UFI@ThesisExtAdvisorLabel}{External Advisor}
-  \newcommand{\UFI@ThesisExtAdvisorsLabel}{External Advisors}
-  \newcommand{\UFI@ThesisDirectorLabel}{Director}
-  \newcommand{\UFI@ThesisDirectorsLabel}{Directors}
+  \providecommand{\UFI@ThesisCoAdvisorLabel}{Co-Advisor}
+  \providecommand{\UFI@ThesisCoAdvisorsLabel}{Co-Advisors}
+  \providecommand{\UFI@ThesisDirectorLabel}{Director}
+  \providecommand{\UFI@ThesisDirectorsLabel}{Directors}
   \newcommand{\UFI@AcademicYearLabel}{Academic Year}
   \newcommand{\UFI@ThesisNotDefensedLabel}{Thesis not yet defended}
   \newcommand{\UFI@ThesisDefensedLabelA}{Thesis defended on}
@@ -556,12 +861,10 @@ manually. See the documentation or just the frontispiece.}
   \newcommand{\UFI@IDnumberLabel}{Matricola}
   \newcommand{\UFI@ThesisAdvisorLabel}{Relatore}
   \newcommand{\UFI@ThesisAdvisorsLabel}{Relatori}
-  \newcommand{\UFI@ThesisCoAdvisorLabel}{Correlatore}
-  \newcommand{\UFI@ThesisCoAdvisorsLabel}{Correlatori}
-  \newcommand{\UFI@ThesisExtAdvisorLabel}{Relatore esterno}
-  \newcommand{\UFI@ThesisExtAdvisorsLabel}{Relatori esterni}
-  \newcommand{\UFI@ThesisDirectorLabel}{Direttore}
-  \newcommand{\UFI@ThesisDirectorsLabel}{Direttori}
+  \providecommand{\UFI@ThesisCoAdvisorLabel}{Correlatore}
+  \providecommand{\UFI@ThesisCoAdvisorsLabel}{Correlatori}
+  \providecommand{\UFI@ThesisDirectorLabel}{Direttore}
+  \providecommand{\UFI@ThesisDirectorsLabel}{Direttori}
   \newcommand{\UFI@AcademicYearLabel}{Anno Accademico}
   \newcommand{\UFI@ThesisNotDefensedLabel}{Tesi non ancora discussa}
   \newcommand{\UFI@ThesisDefensedLabelA}{Tesi discussa il}

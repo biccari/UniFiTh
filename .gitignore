@@ -4,4 +4,7 @@
 *.gz
 *.bst
 *.bat
-tds/
+releases/
+documents/
+test/
+Dottorato.*
